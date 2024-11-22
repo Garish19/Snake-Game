@@ -19,7 +19,10 @@ class objPos
         
         // Respect the rule of six / minimum four
         // [TODO] Implement the missing special member functions to meet the minimum four rule
-        
+        objPos(const objPos &o);    //Copy constructor
+        objPos& operator=(const objPos &o); //Copy Assignment operator
+        ~objPos();  //Destructor
+
         void setObjPos(objPos o);        
         void setObjPos(int xPos, int yPos, char sym);  
 
