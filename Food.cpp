@@ -1,5 +1,6 @@
 #include "Food.h"
 #include <iostream>
+#include <time.h>
 using namespace std;
 
 void Food::generateFood(objPos blockOff)
@@ -7,7 +8,7 @@ void Food::generateFood(objPos blockOff)
     int i, j, unique, RandNum_x, RandNum_y, xRange = 20, yRange = 10;
     char RandSymbol;
 
-    if( (blockOff.pos->x == foodPos.pos->x) || (blockOff.pos->y  == foodPos.pos->y))
+    if((blockOff.pos->x == foodPos.pos->x) || (blockOff.pos->y  == foodPos.pos->y))
     {
         return;
     }
@@ -17,8 +18,8 @@ void Food::generateFood(objPos blockOff)
         do
         {
             unique = 1;
-            RandNum_x = (rand() % xRange) + 1;
-            RandNum_y = (rand() % yRange) + 1;
+            RandNum_x = (rand() % (xRange - 2)) + 1;
+            RandNum_y = (rand() % (yRange - 2)) + 1;
 
         
             RandSymbol = (rand() % 93) + 33;
@@ -61,10 +62,10 @@ objPos Food::getFoodPos() const
 
 Food::Food()     //Constructor
 {
-    int unique = 1;
-    
-    foodPos.pos->x = 2;
-    foodPos.pos->y = 5;
+    int unique = 1, xRange = 20, yRange = 10;
+
+    foodPos.pos->x = (rand() % (xRange - 2)) + 1;
+    foodPos.pos->y = (rand() % (yRange - 2)) + 1;
     do
     {
         foodPos.symbol = (rand() % 93) + 33;

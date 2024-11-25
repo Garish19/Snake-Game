@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "GameMechs.h"
 #include "Food.h"
-
+#include <time.h>
 
 using namespace std;
 
@@ -31,16 +31,23 @@ string gameBoard[10]={
     {"$                  $"},
     {"$$$$$$$$$$$$$$$$$$$$"}  
 };
-GameMechs* gameMechInstance = new GameMechs(20,10); 
+GameMechs* gameMechInstance = new GameMechs(20,10);
 
 Player* snakeHead = new Player(gameMechInstance); 
 
+Food* snakeFood = nullptr;
+Food* new_snakeFood = nullptr;
 
+int wipe_food;
 
 int main(void)
 {
 
     Initialize();
+
+    srand(time(NULL));
+    snakeFood = new Food();
+    new_snakeFood = new Food();
 
     while(gameMechInstance->getExitFlagStatus() == false)  
     {
@@ -61,6 +68,8 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     exitFlag = false;
+
+    wipe_food = 0;
 }
 
 void GetInput(void)
@@ -79,6 +88,10 @@ void RunLogic(void)
         gameMechInstance->setExitTrue();
     }
 
+    if (gameMechInstance->getInput() == 61)        //Debug key (=) to wipe away current food and generate new food
+    {
+        wipe_food = 1;
+    }
     snakeHead->updatePlayerDir();
     snakeHead->movePlayer();
 
@@ -91,6 +104,13 @@ void DrawScreen(void)
 
     objPos myCharacter = snakeHead->getPlayerPos();
 
+    if(wipe_food == 1)
+    {
+        snakeFood->generateFood(myCharacter);
+        wipe_food = 0;
+    }
+
+    objPos foodGeneration = snakeFood->getFoodPos();
 
 for (int i =0; i<gameMechInstance->getBoardSizeY();i++){
         for (int j=0; j<gameMechInstance->getBoardSizeX(); j++){
@@ -100,7 +120,13 @@ for (int i =0; i<gameMechInstance->getBoardSizeY();i++){
             //if the character position is met in the gameboard, print character
             if (myCharacter.pos->x== j && myCharacter.pos->y == i){
                 MacUILib_printf("%c", myCharacter.getSymbol());
-                printed =1; 
+                printed = 1; 
+            }
+
+            if(foodGeneration.pos->x == j && foodGeneration.pos->y == i)
+            {
+                MacUILib_printf("%c", foodGeneration.symbol);
+                printed = 1;
             }
 
             if (printed!=1){
@@ -123,7 +149,8 @@ for (int i =0; i<gameMechInstance->getBoardSizeY();i++){
 MacUILib_printf("\n///Debugging Messages///\n");
 MacUILib_printf("Key Pressed: %c\n", gameMechInstance->getPrevInput());
 MacUILib_printf("Current state of FSM: %d\n",snakeHead->getFSMState());
-MacUILib_printf("Current Player Coordinates (x,y): (%d,%d)", myCharacter.pos->x, myCharacter.pos->y);
+MacUILib_printf("Current Player Coordinates (x,y): (%d,%d)\n", myCharacter.pos->x, myCharacter.pos->y);
+MacUILib_printf("Current Random Food Coordinates (x,y): (%d,%d)", foodGeneration.pos->x, foodGeneration.pos->y);
     
 }
 
@@ -135,6 +162,10 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
+    delete gameMechInstance;
+    delete snakeHead;
+    delete snakeFood;
+    delete new_snakeFood;
 
     MacUILib_clearScreen();    
     if(gameMechInstance->getLoseFlagStatus() == true ){
