@@ -73,7 +73,7 @@ void Player::movePlayer()
         playerPos.pos->y--;
         // If the character's y-position reaches 0 (out of bounds), wrap around to y = 8
         if (playerPos.pos->y == 0) {
-            playerPos.pos->y = mainGameMechsRef->getBoardSizeY()-1;
+            playerPos.pos->y = mainGameMechsRef->getBoardSizeY()-2;
         }
         break;
 
@@ -91,7 +91,7 @@ void Player::movePlayer()
         playerPos.pos->x--;
         // If the character's x-position reaches 0 (out of bounds), wrap around to x = 18
         if (playerPos.pos->x== 0) {
-            playerPos.pos->x = mainGameMechsRef->getBoardSizeX()-1;
+            playerPos.pos->x = mainGameMechsRef->getBoardSizeX()-2;
         }
         break;
     case STOP:
