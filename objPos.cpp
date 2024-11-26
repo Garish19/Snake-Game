@@ -29,7 +29,7 @@ objPos::~objPos(){
 objPos::objPos(const objPos &a){
     pos = new Pos;
     pos->x = a.pos->x;
-    pos->y = a.pos->y;
+    pos->y = a.pos->y; 
     symbol = a.symbol;
 }
 
@@ -38,7 +38,7 @@ objPos& objPos::operator=(const objPos &a){
 
    if(this != &a)
    {
-        this->pos = new Pos;
+        // this->pos = new Pos;
         this->pos->x  = a.pos->x;
         this->pos->y  = a.pos->y;
         this->symbol = a.symbol;
