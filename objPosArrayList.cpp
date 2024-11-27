@@ -20,6 +20,17 @@ objPosArrayList::objPosArrayList()      //Constructor
     }
 }
 
+objPosArrayList::objPosArrayList(int foodListSize)      //Constructor
+{
+    arrayCapacity = ARRAY_MAX_CAP;
+    listSize = foodListSize;
+    aList = new objPos[ARRAY_MAX_CAP];  
+    for(int i = 0; i < ARRAY_MAX_CAP - 1; i++)
+    {
+        aList[i] = objPos();
+    }
+}
+
 objPosArrayList::~objPosArrayList()     //Destructor 
 {
     delete[] aList;
@@ -58,7 +69,7 @@ int objPosArrayList::getSize() const
 
 void objPosArrayList::insertHead(objPos thisPos)
 {
-    if(listSize >= arrayCapacity)
+    if(listSize == arrayCapacity)
     {
         cout << "Array list is full" << endl;
     }
@@ -74,7 +85,7 @@ void objPosArrayList::insertHead(objPos thisPos)
 
 void objPosArrayList::insertTail(objPos thisPos)
 {
-    if(listSize >= arrayCapacity)
+    if(listSize == arrayCapacity)
     {
         cout << "Array list is full" << endl;
     }
@@ -85,7 +96,7 @@ void objPosArrayList::insertTail(objPos thisPos)
 
 void objPosArrayList::removeHead()
 {
-   if(listSize <= arrayCapacity)
+   if(listSize != arrayCapacity)
    {
         for(int i = 0; i < listSize - 1; i++)
         {
@@ -134,5 +145,18 @@ objPos objPosArrayList::getElement(int index) const
     {
         cout << "Tried to get element of out of acccess index" << endl;
         return objPos();
+    }
+}
+
+void objPosArrayList::insertElement(int index, objPos food) const
+{
+    if(index >= 0 && index < listSize)
+    {
+       aList[index] = food ; 
+    }
+
+    else
+    {
+        cout << "Tried to get element of out of acccess index" << endl;
     }
 }

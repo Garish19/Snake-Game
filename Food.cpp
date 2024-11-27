@@ -5,54 +5,54 @@ using namespace std;
 
 void Food::generateFood(objPos blockOff)
 {
+    int numItemsGen =0; 
     int i, j, unique, RandNum_x, RandNum_y, xRange = 20, yRange = 10;
     char RandSymbol;
+    bool existingInBucket = false; 
 
-    if((blockOff.pos->x == foodPos.pos->x) || (blockOff.pos->y  == foodPos.pos->y))
-    {
-        return;
-    }
+    while (numItemsGen!=5){
+  
+
+
     
-    for(i = 0; i < 1; i++)
-    {
         do
         {
             unique = 1;
             RandNum_x = (rand() % (xRange - 2)) + 1;
             RandNum_y = (rand() % (yRange - 2)) + 1;
-
-        
             RandSymbol = (rand() % 93) + 33;
+
             if(RandSymbol == ' ' || RandSymbol == '$' || RandSymbol == '*')
             {
                 unique = 0;
-                continue;
             }
 
-            for(j = 0; j < i; j++)
-            {   
-                if((foodPos.pos->x == RandNum_x) && (foodPos.pos->y == RandNum_y))
-                {
-                    unique = 0;
-                    break;
-                }
+        
+            if((blockOff.pos->x == RandNum_x) && (blockOff.pos->y  == RandNum_y))
+            {
+                unique = 0;
             }
+        
 
-            for(j = 0; j < i; j++)
-            {   
-                if(foodPos.symbol == RandSymbol)
-                {
-                    unique = 0;
-                    break;
-                }
-            }
+            
+
+            existingInBucket = inBucketCheck(); 
         }
-        while(unique == 0);
+        while(unique == 0 && existingInBucket);
 
         foodPos.pos->x = RandNum_x;
         foodPos.pos->y = RandNum_y;
         foodPos.symbol = RandSymbol;
+
+
+        foodBucket->insertElement(numItemsGen,foodPos);
+        numItemsGen++; 
+    
     }
+
+
+  
+    return; 
 }
 
 objPos Food::getFoodPos() const
@@ -62,20 +62,7 @@ objPos Food::getFoodPos() const
 
 Food::Food()     //Constructor
 {
-    int unique = 1, xRange = 20, yRange = 10;
-
-    foodPos.pos->x = (rand() % (xRange - 2)) + 1;
-    foodPos.pos->y = (rand() % (yRange - 2)) + 1;
-    do
-    {
-        foodPos.symbol = (rand() % 93) + 33;
-        if(foodPos.symbol == ' ' || foodPos.symbol == '$' || foodPos.symbol == '*')
-        {
-            unique = 0;
-            continue;
-        }
-    }
-    while(unique == 0);
+   foodBucket = new objPosArrayList(5); 
 }
 
 Food::Food(Food const &f)     //Copy Constructor
@@ -97,6 +84,31 @@ Food& Food::operator=(Food const &f)     //Copy Assignment Operator
     }
     
     return *this;
+}
+
+
+bool Food::inBucketCheck(){
+
+    for (int i = 0; i<foodBucket->getSize(); i++ ){
+        objPos currentFood = foodBucket->getElement(i).getObjPos();
+        if ((currentFood.pos->x  == foodPos.pos->x && currentFood.pos->y  == foodPos.pos->y) || currentFood.getSymbol() == foodPos.getSymbol()){
+            return true; 
+        }
+
+        else{
+            return false; 
+        }
+    }
+
+}
+
+int Food::bucketSize(){
+
+    return foodBucket->getSize(); 
+}
+
+objPos Food::getFromBucket(int index){
+    return foodBucket->getElement(index); 
 }
 
 Food::~Food()    //Destructor
