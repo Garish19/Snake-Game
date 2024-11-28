@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "iostream"
 
 
 Player::Player(GameMechs* thisGMRef)
@@ -106,11 +107,14 @@ void Player::movePlayer(Food *snakeFood)
         break; 
     }
 
-    
+    if (checkSelfCollision()){
+        mainGameMechsRef->setLoseFlag();
+        return; 
+    }
     
     if (checkFoodConsumption(snakeFood)){
-        playerPosList->insertHead(objPos(11,5,'*')); 
-        snakeFood->generateFood(playerPosList);
+       increasePlayerLength();
+       snakeFood->generateFood(playerPosList);
     }
 
     playerPosList->insertHead(nextHead); 
@@ -133,4 +137,23 @@ bool Player::checkFoodConsumption(Food *snakeFood){
     }
     return false;
 
+}
+
+void Player::increasePlayerLength(){
+    objPos newTail = playerPosList->getTailElement();
+        playerPosList->insertTail(objPos(newTail.pos->x,newTail.pos->y,'*')); 
+        mainGameMechsRef->setScore(playerPosList->getSize()-1); 
+}
+ 
+bool Player::checkSelfCollision(){
+    objPos playerHead = playerPosList->getHeadElement();
+
+    for (int i =1; i<playerPosList->getSize(); i++){
+        objPos currentBodyPart = playerPosList->getElement(i);
+        if (playerHead.pos->x == currentBodyPart.pos->x && playerHead.pos->y==currentBodyPart.pos->y){
+            return true; 
+        }
+    }
+
+    return false; 
 }

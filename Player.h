@@ -27,6 +27,7 @@ class Player
         Dir getFSMState(); 
         bool checkFoodConsumption(Food* snakeFood);
         void increasePlayerLength(); 
+        bool checkSelfCollision(); 
 
         // More methods to be added here
 

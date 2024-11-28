@@ -2,13 +2,18 @@
 
 GameMechs::GameMechs()
 {
-    
+ score =0;
+ exitFlag = false; 
+ loseFlag= false; 
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
 {
     boardSizeX = boardX; 
     boardSizeY = boardY; 
+    score =0;
+    exitFlag = false; 
+    loseFlag=false; 
 }
 
 // do you need a destructor?
@@ -84,5 +89,9 @@ void GameMechs::clearInput()
 
 char GameMechs::getPrevInput(){
     return prevInput; 
+}
+
+void GameMechs::setScore(int val){
+    score=val; 
 }
 // More methods should be added here

@@ -45,11 +45,10 @@ int main(void)
 
     Initialize();
 
-    srand(time(NULL));
    
 
 
-    while(gameMechInstance->getExitFlagStatus() == false)  
+    while(gameMechInstance->getExitFlagStatus() == false && gameMechInstance->getLoseFlagStatus() == false)  
     {
         GetInput();
         RunLogic();
@@ -67,7 +66,6 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
     snakeFood = new Food();
-    new_snakeFood = new Food();
     snakeFood->generateFood(snakeHead->getPlayerPos());
 
     exitFlag = false;
@@ -150,6 +148,7 @@ for (int i =0; i<gameMechInstance->getBoardSizeY();i++){
 MacUILib_printf("\n///Debugging Messages///\n");
 MacUILib_printf("Key Pressed: %c\n", gameMechInstance->getPrevInput());
 MacUILib_printf("Current state of FSM: %d\n",snakeHead->getFSMState());
+MacUILib_printf("Score: %d", gameMechInstance->getScore());
     
 }
 
@@ -164,14 +163,13 @@ void CleanUp(void)
     delete gameMechInstance;
     delete snakeHead;
     delete snakeFood;
-    delete new_snakeFood;
 
     MacUILib_clearScreen();    
     if(gameMechInstance->getLoseFlagStatus() == true ){
 
         MacUILib_printf ("You Lost, Better Luck Next Time!"); 
     }
-    else if (gameMechInstance->getExitFlagStatus() == true){
+    else {
         MacUILib_printf("See You Next Time!"); 
     }
     MacUILib_uninit();

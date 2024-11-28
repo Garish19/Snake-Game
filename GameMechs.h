@@ -44,6 +44,7 @@ class GameMechs
         
         int getScore() const;
         void incrementScore();
+        void setScore(int val); 
         
         // More methods should be added here
 };

@@ -9,6 +9,7 @@ void Food::generateFood(objPosArrayList* blockOff)
     int i, j, unique, RandNum_x, RandNum_y, xRange = 20, yRange = 10;
     char RandSymbol;
     bool existingInBucket = false; 
+    srand(time(NULL));
 
     while (numItemsGen!=5){
   
@@ -22,6 +23,10 @@ void Food::generateFood(objPosArrayList* blockOff)
             RandNum_y = (rand() % (yRange - 2)) + 1;
             RandSymbol = (rand() % 93) + 33;
 
+            foodPos.pos->x = RandNum_x;
+            foodPos.pos->y = RandNum_y;
+            foodPos.symbol = RandSymbol;
+
             if(RandSymbol == ' ' || RandSymbol == '$' || RandSymbol == '*')
             {
                 unique = 0;
@@ -32,19 +37,16 @@ void Food::generateFood(objPosArrayList* blockOff)
             {
                 unique = 0;
             }
-        
-
-            if(unique==1){
-            existingInBucket = inBucketCheck(); 
-            }
+            if (existingInBucket = inBucketCheck()){
+                unique=0; 
+            } 
+            
 
           
         }
-        while(unique == 0 && existingInBucket);
+        while(unique == 0);
 
-        foodPos.pos->x = RandNum_x;
-        foodPos.pos->y = RandNum_y;
-        foodPos.symbol = RandSymbol;
+        
 
 
         foodBucket->insertElement(numItemsGen,foodPos);
