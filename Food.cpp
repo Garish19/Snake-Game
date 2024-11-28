@@ -3,7 +3,7 @@
 #include <time.h>
 using namespace std;
 
-void Food::generateFood(objPos blockOff)
+void Food::generateFood(objPosArrayList* blockOff)
 {
     int numItemsGen =0; 
     int i, j, unique, RandNum_x, RandNum_y, xRange = 20, yRange = 10;
@@ -28,15 +28,17 @@ void Food::generateFood(objPos blockOff)
             }
 
         
-            if((blockOff.pos->x == RandNum_x) && (blockOff.pos->y  == RandNum_y))
+            if(snakeBodyCheck(blockOff, RandNum_x,RandNum_y))
             {
                 unique = 0;
             }
         
 
-            
-
+            if(unique==1){
             existingInBucket = inBucketCheck(); 
+            }
+
+          
         }
         while(unique == 0 && existingInBucket);
 
@@ -95,11 +97,25 @@ bool Food::inBucketCheck(){
             return true; 
         }
 
-        else{
-            return false; 
-        }
+       
     }
 
+
+            return false; 
+        
+
+}
+
+bool Food::snakeBodyCheck(objPosArrayList* blockOff, int x, int y){
+    bool isCordTaken = false;
+    for (int i =0; i<blockOff->getSize(); i++ ){
+         isCordTaken = blockOff->getElement(i).pos->x == x &&  blockOff->getElement(i).pos->y == y; 
+         if(isCordTaken){
+            return isCordTaken; 
+         }
+    }
+
+    return isCordTaken;
 }
 
 int Food::bucketSize(){
@@ -112,6 +128,6 @@ objPos Food::getFromBucket(int index){
 }
 
 Food::~Food()    //Destructor
-{
+{  
     delete foodPos.pos;
 }

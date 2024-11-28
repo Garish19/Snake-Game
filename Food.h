@@ -10,7 +10,7 @@ class Food
     objPos foodPos;
     objPosArrayList  * foodBucket; 
     public:
-    void generateFood(objPos blockOff);
+    void generateFood(objPosArrayList* blockOff);
 //     The random food generation algorithm should be placed here. (copy from PPA3)
 //  blockOff should contain the player position, on which the new food should NOT be generated.
 
@@ -24,6 +24,7 @@ class Food
     ~Food();    //Destructor
     int bucketSize(); 
     objPos getFromBucket(int index); 
+    bool snakeBodyCheck(objPosArrayList* blockOff, int x, int y); 
 
 };
 
