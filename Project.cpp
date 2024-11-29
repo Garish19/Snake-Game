@@ -14,7 +14,7 @@ bool exitFlag;
 
 void Initialize(void);
 void GetInput(void);
-void RunLogic(void);
+int RunLogic(void);
 void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
@@ -51,8 +51,9 @@ int main(void)
     while(gameMechInstance->getExitFlagStatus() == false && gameMechInstance->getLoseFlagStatus() == false)  
     {
         GetInput();
-        RunLogic();
+        if (RunLogic() != 1);{
         DrawScreen();
+        }
         LoopDelay();
     }
 
@@ -80,15 +81,16 @@ void GetInput(void)
     }
 }
 
-void RunLogic(void)
+int RunLogic(void)
 {
 
     if (gameMechInstance->getInput()== 27){
         gameMechInstance->setExitTrue();
     }
     snakeHead->updatePlayerDir();
-    snakeHead->movePlayer(snakeFood);
-
+    if (1==snakeHead->movePlayer(snakeFood)){
+        return 1; 
+    }
     gameMechInstance->clearInput(); 
 }
 
@@ -160,18 +162,26 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
+
+ 
+
+
+    MacUILib_clearScreen();    
+    
+    
+       if(gameMechInstance->getLoseFlagStatus() == true ){
+
+        MacUILib_printf ("You Lost, Better Luck Next Time!"); 
+    }
+    else  {
+        MacUILib_printf("See You Next Time!"); 
+    }
+
+
     delete gameMechInstance;
     delete snakeHead;
     delete snakeFood;
 
-    MacUILib_clearScreen();    
-    if(gameMechInstance->getLoseFlagStatus() == true ){
-
-        MacUILib_printf ("You Lost, Better Luck Next Time!"); 
-    }
-    else {
-        MacUILib_printf("See You Next Time!"); 
-    }
-    MacUILib_uninit();
+    
 }
  

@@ -59,7 +59,7 @@ void Player::updatePlayerDir()
 
 }
 
-void Player::movePlayer(Food *snakeFood)
+int Player::movePlayer(Food *snakeFood)
 {
     objPos nextHead = playerPosList->getHeadElement(); 
 
@@ -109,7 +109,7 @@ void Player::movePlayer(Food *snakeFood)
 
     if (checkSelfCollision()){
         mainGameMechsRef->setLoseFlag();
-        return; 
+        return 1; 
     }
     
     if(checkFoodConsumption(snakeFood) == 1)
@@ -135,6 +135,7 @@ void Player::movePlayer(Food *snakeFood)
 
     playerPosList->insertHead(nextHead); 
     playerPosList->removeTail();
+    return 0;
 
    
 }
