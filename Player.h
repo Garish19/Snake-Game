@@ -23,7 +23,7 @@ class Player
 
         objPosArrayList* getPlayerPos() const; // Upgrade this in iteration 3.       
         void updatePlayerDir();
-        void movePlayer(Food *snakeFood);
+        int movePlayer(Food *snakeFood);
         Dir getFSMState(); 
         bool checkFoodConsumption(Food* snakeFood);
         void increasePlayerLength(); 
