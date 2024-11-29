@@ -79,6 +79,7 @@ objPos Food::getFoodPos() const
 Food::Food()     //Constructor
 {
    foodBucket = new objPosArrayList(5); 
+   foodPos= objPos();
 }
 
 Food::Food(Food const &f)     //Copy Constructor
@@ -87,6 +88,7 @@ Food::Food(Food const &f)     //Copy Constructor
     foodPos.pos->x = f.foodPos.pos->x;
     foodPos.pos->y = f.foodPos.pos->y;
     foodPos.symbol = f.foodPos.symbol;
+
 }
 
 Food& Food::operator=(Food const &f)     //Copy Assignment Operator
@@ -144,4 +146,5 @@ objPos Food::getFromBucket(int index){
 Food::~Food()    //Destructor
 {  
     delete foodPos.pos;
+    delete  foodBucket; 
 }

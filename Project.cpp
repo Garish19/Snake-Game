@@ -36,7 +36,6 @@ GameMechs* gameMechInstance = new GameMechs(20,10);
 Player* snakeHead = new Player(gameMechInstance); 
 
 Food* snakeFood = nullptr;
-Food* new_snakeFood = nullptr;
 
 int wipe_food;
 

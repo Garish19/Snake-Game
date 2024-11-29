@@ -1,4 +1,8 @@
 #include "objPosArrayList.h"
+
+// Paste your Tested implementation here.
+// Paste your Tested implementation here.
+// Paste your Tested implementation here.
 #include <iostream>
 using namespace std;
 
@@ -15,6 +19,8 @@ objPosArrayList::objPosArrayList()      //Constructor
         aList[i] = objPos();
     }
 }
+
+
 
 objPosArrayList::~objPosArrayList()     //Destructor 
 {
@@ -54,41 +60,34 @@ int objPosArrayList::getSize() const
 
 void objPosArrayList::insertHead(objPos thisPos)
 {
-    if(listSize >= arrayCapacity)
+    if(listSize == arrayCapacity)
     {
         cout << "Array list is full" << endl;
     }
 
-    else
+    for(int i = listSize; i > 0; i--)
     {
-        for(int i = listSize; i > 0; i--)
-        {
-            aList[i] = aList[i-1];
-        }
-
-        aList[0] = thisPos;
-        listSize++;
+        aList[i] = aList[i-1];
     }
 
+    aList[0] = thisPos;
+    listSize++;
 }
 
 void objPosArrayList::insertTail(objPos thisPos)
 {
-    if(listSize >= arrayCapacity)
+    if(listSize == arrayCapacity)
     {
         cout << "Array list is full" << endl;
     }
 
-    else
-    {
-        aList[listSize] = thisPos;
-        listSize++;
-    }
+    aList[listSize] = thisPos;
+    listSize++;
 }
 
 void objPosArrayList::removeHead()
 {
-   if(listSize <= arrayCapacity)
+   if(listSize != arrayCapacity)
    {
         for(int i = 0; i < listSize - 1; i++)
         {
