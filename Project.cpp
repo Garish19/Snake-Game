@@ -144,7 +144,7 @@ for (int i =0; i<gameMechInstance->getBoardSizeY();i++){
 
   }
 
-
+MacUILib_printf("\nEating S = +3 score\nEating s = +3 snake length\n");
 MacUILib_printf("\n///Debugging Messages///\n");
 MacUILib_printf("Key Pressed: %c\n", gameMechInstance->getPrevInput());
 MacUILib_printf("Current state of FSM: %d\n",snakeHead->getFSMState());

@@ -6,8 +6,13 @@
 
 #include "objPos.h"
 #include "objPosArrayList.h"
+#include "Player.h"
+#include "Food.h"
 
 using namespace std;
+
+class Player;       //removing this stops the code from compiling **IMPORTANT
+class Food;         //removing this stops the code from compiling **IMPORTANT
 
 class GameMechs
 {
@@ -43,7 +48,7 @@ class GameMechs
         int getBoardSizeY() const;
         
         int getScore() const;
-        void incrementScore();
+        int incrementScore(int);
         void setScore(int val); 
         
         // More methods should be added here

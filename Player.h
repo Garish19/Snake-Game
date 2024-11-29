@@ -6,6 +6,9 @@
 #include "objPosArrayList.h"
 #include "Food.h"
 
+class GameMechs;        //removing this stops the code from compiling **IMPORTANT
+class Food;             //removing this stops the code from compiling **IMPORTANT
+
 class Player
 {
     // Construct the remaining declaration from the project manual.
@@ -25,8 +28,8 @@ class Player
         void updatePlayerDir();
         void movePlayer(Food *snakeFood);
         Dir getFSMState(); 
-        bool checkFoodConsumption(Food* snakeFood);
-        void increasePlayerLength(); 
+        int checkFoodConsumption(Food* snakeFood);
+        void increasePlayerLength(int num); 
         bool checkSelfCollision(); 
 
         // More methods to be added here

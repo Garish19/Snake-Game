@@ -46,9 +46,10 @@ int GameMechs::getScore() const
     return score; 
 }
 
-void GameMechs::incrementScore()
+int GameMechs::incrementScore(int increment)
 {
-   score++; 
+    score += increment;
+    return score;
 }
 
 int GameMechs::getBoardSizeX() const
@@ -59,7 +60,7 @@ int GameMechs::getBoardSizeX() const
 
 int GameMechs::getBoardSizeY() const
 {
-    //STarting from 0
+    //Starting from 0
     return boardSizeY; 
 }
 

@@ -21,7 +21,19 @@ void Food::generateFood(objPosArrayList* blockOff)
             unique = 1;
             RandNum_x = (rand() % (xRange - 2)) + 1;
             RandNum_y = (rand() % (yRange - 2)) + 1;
-            RandSymbol = (rand() % 93) + 33;
+
+            if(rand() % 4 == 0)
+            {
+                RandSymbol = 'S';
+            }
+            else if(rand() % 4 == 2)
+            {
+                RandSymbol = 's';
+            }
+            else
+            {
+                RandSymbol = (rand() % 93) + 33;
+            }
 
             foodPos.pos->x = RandNum_x;
             foodPos.pos->y = RandNum_y;

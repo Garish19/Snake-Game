@@ -112,9 +112,25 @@ void Player::movePlayer(Food *snakeFood)
         return; 
     }
     
-    if (checkFoodConsumption(snakeFood)){
-       increasePlayerLength();
+    if(checkFoodConsumption(snakeFood) == 1)
+    {
+        increasePlayerLength(1);
+        snakeFood->generateFood(playerPosList);
+        mainGameMechsRef->setScore(mainGameMechsRef->incrementScore(3));
+    }
+
+    if(checkFoodConsumption(snakeFood) == 2)
+    {
+        increasePlayerLength(3);
+        snakeFood->generateFood(playerPosList);
+        mainGameMechsRef->setScore(mainGameMechsRef->incrementScore(1));
+    }
+
+    if((checkFoodConsumption(snakeFood) == -1))
+    {
+       increasePlayerLength(1);
        snakeFood->generateFood(playerPosList);
+       mainGameMechsRef->setScore(mainGameMechsRef->incrementScore(1));
     }
 
     playerPosList->insertHead(nextHead); 
@@ -128,21 +144,34 @@ Player::Dir Player::getFSMState(){
 }
 
 
-bool Player::checkFoodConsumption(Food *snakeFood){
+int Player::checkFoodConsumption(Food *snakeFood){
     for (int i =0; i<snakeFood->bucketSize(); i++){
         objPos currentFood = snakeFood->getFromBucket(i);
         if (playerPosList->getHeadElement().pos->x == currentFood.pos->x  && playerPosList->getHeadElement().pos->y == currentFood.pos->y){
-            return true; 
+            if (currentFood.symbol == 'S')
+            {
+                return 1; 
+            }
+            else if(currentFood.symbol == 's')
+            {
+                return 2;
+            }
+            else
+            {
+                return -1; 
+            }
         }
     }
-    return false;
-
+    return 0;
 }
 
-void Player::increasePlayerLength(){
+
+void Player::increasePlayerLength(int num){
     objPos newTail = playerPosList->getTailElement();
-        playerPosList->insertTail(objPos(newTail.pos->x,newTail.pos->y,'*')); 
-        mainGameMechsRef->setScore(playerPosList->getSize()-1); 
+        for(int i = 0; i < num; i++)
+        {
+            playerPosList->insertTail(objPos(newTail.pos->x,newTail.pos->y,'*')); 
+        }
 }
  
 bool Player::checkSelfCollision(){
