@@ -1,14 +1,14 @@
 #include "objPos.h"
 
-objPos::objPos()
-{
+objPos::objPos()        //Constructor assigns heap space because pos is a pointer to a struct Pos containing x and y,
+{                       //so the struct has to be initialized on the heap
     pos = new Pos;
     pos->x = 0;
     pos->y = 0;
     symbol = 0; //NULL
 }
 
-objPos::objPos(int xPos, int yPos, char sym)
+objPos::objPos(int xPos, int yPos, char sym)        //Similar reasoning as default constructor above
 {
     pos = new Pos;
     pos->x = xPos;
@@ -16,18 +16,15 @@ objPos::objPos(int xPos, int yPos, char sym)
     symbol = sym;
 }
 
-// Respect the rule of six / minimum four
-// [TODO] Implement the missing special member functions to meet the minimum four rule
-
 //Destructor
 objPos::~objPos(){
 
-    delete pos; 
+    delete pos;             //Deletes the struct created on memory
 }
 
 //Copy Constructor
 objPos::objPos(const objPos &a){
-    pos = new Pos;
+    pos = new Pos;                  //Deep copy by assigning new heap space for element copied to
     pos->x = a.pos->x;
     pos->y = a.pos->y;
     symbol = a.symbol;
@@ -38,7 +35,7 @@ objPos& objPos::operator=(const objPos &a){
 
    if(this != &a)
    {
-        this->pos->x  = a.pos->x;
+        this->pos->x  = a.pos->x;       //Deep copy, heap already created for "this" object
         this->pos->y  = a.pos->y;
         this->symbol = a.symbol;
    }
@@ -75,14 +72,14 @@ char objPos::getSymbol() const
     return symbol;
 }
 
-bool objPos::isPosEqual(const objPos* refPos) const
-{
+bool objPos::isPosEqual(const objPos* refPos) const     //Checks x and y pos of a current objPos variable, compared to a
+{                                                       //refrence pos which is passed as an argument. Then returns that pos
     return (refPos->pos->x == pos->x && refPos->pos->y == pos->y);
 }
 
-char objPos::getSymbolIfPosEqual(const objPos* refPos) const
-{
-    if(isPosEqual(refPos))
+char objPos::getSymbolIfPosEqual(const objPos* refPos) const   //Calls isPosEqual to check if the current objPos variable has
+{                                                              //the pos same as a reference pos (passed as an argument).  
+    if(isPosEqual(refPos))                                     //If it is, then return the symbol of that variable
         return symbol;
     else
         return 0;

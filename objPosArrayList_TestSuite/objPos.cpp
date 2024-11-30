@@ -31,7 +31,6 @@ objPos& objPos::operator =(const objPos &o) //Copy Assignment operator
 {
     if(this != &o){
 
-        this->pos = new Pos;
         this->pos->x  = o.pos->x;
         this->pos->y  = o.pos->y;
         this->symbol = o.symbol;

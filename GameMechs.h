@@ -26,9 +26,9 @@ class GameMechs
         objPos food;
 
     public:
-        GameMechs();
+        GameMechs();            //Constructor
         GameMechs(int boardX, int boardY);
-        ~GameMechs(); // is this one needed at all? Why or why not?
+        ~GameMechs();       //An empty destructor
         
         bool getExitFlagStatus() const; 
         void setExitTrue();
@@ -47,8 +47,6 @@ class GameMechs
         int getScore() const;
         int incrementScore(int);
         void setScore(int val); 
-        
-        // More methods should be added here
 };
 
 #endif

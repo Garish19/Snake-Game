@@ -8,21 +8,14 @@
 
 
 class Player
-{
-    // Construct the remaining declaration from the project manual.
-
-    // Only some sample members are included here
-
-    // You will include more data members and member functions to complete your design.
-
-    
+{   
     public:
         enum Dir {UP, DOWN, LEFT, RIGHT, STOP};  // This is the direction state
 
         Player(GameMechs* thisGMRef);
-        ~Player();
+        ~Player();      //Destructor
 
-        objPosArrayList* getPlayerPos() const; // Upgrade this in iteration 3.       
+        objPosArrayList* getPlayerPos() const;      
         void updatePlayerDir();
         int movePlayer(Food *snakeFood);
         Dir getFSMState(); 
@@ -30,14 +23,12 @@ class Player
         void increasePlayerLength(); 
         bool checkSelfCollision(); 
 
-        // More methods to be added here
-
     private:
-        objPosArrayList* playerPosList; // Upgrade this in iteration 3.       
-        Dir myDir;
-        int backLog;
+        objPosArrayList* playerPosList;    //Pointer of type objPosArrayit 
+        Dir myDir;                         //Current direction
+        int backLog;   //Backlog of how many characters need to be inserted into snake tail. Done to ensure that when inserting many characters, they don't insert on top of one another
 
-        // Need a reference to the Main Game Mechanisms
+        //A reference to the Main Game Mechanisms
         GameMechs* mainGameMechsRef;
 };
 
