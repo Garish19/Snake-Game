@@ -6,8 +6,6 @@
 #include "objPosArrayList.h"
 #include "Food.h"
 
-class GameMechs;        //removing this stops the code from compiling **IMPORTANT
-class Food;             //removing this stops the code from compiling **IMPORTANT
 
 class Player
 {

@@ -5,14 +5,11 @@
 #include <time.h>
 
 #include "objPos.h"
-#include "objPosArrayList.h"
-#include "Player.h"
-#include "Food.h"
+
 
 using namespace std;
 
-class Player;       //removing this stops the code from compiling **IMPORTANT
-class Food;         //removing this stops the code from compiling **IMPORTANT
+
 
 class GameMechs
 {
