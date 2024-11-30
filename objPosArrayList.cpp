@@ -14,21 +14,15 @@ objPosArrayList::objPosArrayList()      //Constructor
     arrayCapacity = ARRAY_MAX_CAP;
     listSize = 0;
     aList = new objPos[ARRAY_MAX_CAP];  
-    for(int i = 0; i < ARRAY_MAX_CAP - 1; i++)
-    {
-        aList[i] = objPos();
-    }
+   
 }
 
 objPosArrayList::objPosArrayList(int foodListSize)      //Constructor
 {
-    arrayCapacity = ARRAY_MAX_CAP;
+    arrayCapacity = foodListSize;
     listSize = foodListSize;
-    aList = new objPos[ARRAY_MAX_CAP];  
-    for(int i = 0; i < ARRAY_MAX_CAP - 1; i++)
-    {
-        aList[i] = objPos();
-    }
+    aList = new objPos[foodListSize];  
+   
 }
 
 objPosArrayList::~objPosArrayList()     //Destructor 
@@ -40,8 +34,8 @@ objPosArrayList::objPosArrayList(objPosArrayList const &arr)        //Copy const
 {
     listSize = arr.listSize;
     arrayCapacity = arr.arrayCapacity;
-    aList = new objPos[ARRAY_MAX_CAP];
-    for(int i = 0; i < listSize - 1; i++)
+    aList = new objPos[listSize];
+    for(int i = 0; i < listSize; i++)
     {
         aList[i] = arr.aList[i];
     }
@@ -51,11 +45,12 @@ objPosArrayList& objPosArrayList::operator =(objPosArrayList const &arr)
 {
     if(this != &arr)
     {
-        listSize = arr.listSize;
-        arrayCapacity = arr.arrayCapacity;
-        for(int i = 0; i < listSize - 1; i++)
+        
+        this->listSize = arr.listSize;
+        this->arrayCapacity = arr.arrayCapacity;
+        for(int i = 0; i < listSize; i++)
         {
-            aList[i] = arr.aList[i];
+            this->aList[i] = arr.aList[i];
         }
     }
 
@@ -98,7 +93,7 @@ void objPosArrayList::removeHead()
 {
    if(listSize != arrayCapacity)
    {
-        for(int i = 0; i < listSize - 1; i++)
+        for(int i = 0; i < listSize; i++)
         {
             aList[i] = aList[i + 1];
         }
@@ -144,7 +139,6 @@ objPos objPosArrayList::getElement(int index) const
     else
     {
         cout << "Tried to get element of out of acccess index" << endl;
-        return objPos();
     }
 }
 

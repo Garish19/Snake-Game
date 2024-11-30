@@ -145,6 +145,5 @@ objPos Food::getFromBucket(int index){
 
 Food::~Food()    //Destructor
 {  
-    delete foodPos.pos;
     delete  foodBucket; 
 }

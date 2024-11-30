@@ -8,6 +8,7 @@ Player::Player(GameMechs* thisGMRef)
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
     playerPosList->insertHead(objPos(11,5,'*'));
+    backLog =0; 
     
 
 
@@ -61,6 +62,7 @@ void Player::updatePlayerDir()
 
 int Player::movePlayer(Food *snakeFood)
 {
+  
     objPos nextHead = playerPosList->getHeadElement(); 
 
     // PPA3 Finite State Machine logic
@@ -114,27 +116,37 @@ int Player::movePlayer(Food *snakeFood)
     
     if(checkFoodConsumption(snakeFood) == 1)
     {
-        increasePlayerLength(1);
+        backLog=1; 
         snakeFood->generateFood(playerPosList);
         mainGameMechsRef->setScore(mainGameMechsRef->incrementScore(3));
     }
 
     if(checkFoodConsumption(snakeFood) == 2)
     {
-        increasePlayerLength(3);
+        backLog =3; 
         snakeFood->generateFood(playerPosList);
         mainGameMechsRef->setScore(mainGameMechsRef->incrementScore(1));
     }
 
     if((checkFoodConsumption(snakeFood) == -1))
     {
-       increasePlayerLength(1);
+        backLog=1; 
        snakeFood->generateFood(playerPosList);
        mainGameMechsRef->setScore(mainGameMechsRef->incrementScore(1));
     }
-
+  
+    if(backLog>0){
+        backLog--;
     playerPosList->insertHead(nextHead); 
-    playerPosList->removeTail();
+    }
+
+    else{
+        playerPosList->insertHead(nextHead); 
+
+        playerPosList->removeTail();
+
+    }
+    
     return 0;
 
    
@@ -167,12 +179,11 @@ int Player::checkFoodConsumption(Food *snakeFood){
 }
 
 
-void Player::increasePlayerLength(int num){
-    objPos newTail = playerPosList->getTailElement();
-        for(int i = 0; i < num; i++)
-        {
-            playerPosList->insertTail(objPos(newTail.pos->x,newTail.pos->y,'*')); 
-        }
+void Player::increasePlayerLength(){
+    objPos newTail = playerPosList->getHeadElement();
+    
+    playerPosList->insertHead(objPos(newTail.pos->x,newTail.pos->y,'*')); 
+        
 }
  
 bool Player::checkSelfCollision(){

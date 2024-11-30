@@ -29,7 +29,7 @@ class Player
         int movePlayer(Food *snakeFood);
         Dir getFSMState(); 
         int checkFoodConsumption(Food* snakeFood);
-        void increasePlayerLength(int num); 
+        void increasePlayerLength(); 
         bool checkSelfCollision(); 
 
         // More methods to be added here
@@ -37,6 +37,7 @@ class Player
     private:
         objPosArrayList* playerPosList; // Upgrade this in iteration 3.       
         Dir myDir;
+        int backLog;
 
         // Need a reference to the Main Game Mechanisms
         GameMechs* mainGameMechsRef;

@@ -19,18 +19,7 @@ void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
 
-string gameBoard[10]={
-    {"$$$$$$$$$$$$$$$$$$$$"},  
-    {"$                  $"},   
-    {"$                  $"},
-    {"$                  $"},
-    {"$                  $"},
-    {"$                  $"},
-    {"$                  $"},
-    {"$                  $"},
-    {"$                  $"},
-    {"$$$$$$$$$$$$$$$$$$$$"}  
-};
+
 GameMechs* gameMechInstance = new GameMechs(20,10);
 
 Player* snakeHead = new Player(gameMechInstance); 
@@ -53,6 +42,7 @@ int main(void)
         if (RunLogic() != 1);{
         DrawScreen();
         }
+
         LoopDelay();
     }
 
@@ -88,6 +78,7 @@ int RunLogic(void)
     }
     snakeHead->updatePlayerDir();
     if (1==snakeHead->movePlayer(snakeFood)){
+        MacUILib_clearScreen(); 
         return 1; 
     }
     gameMechInstance->clearInput(); 
@@ -100,7 +91,18 @@ void DrawScreen(void)
     objPosArrayList* myCharacter = snakeHead->getPlayerPos();
 
     
-      
+    string gameBoard[10]={
+    {"$$$$$$$$$$$$$$$$$$$$"},  
+    {"$                  $"},   
+    {"$                  $"},
+    {"$                  $"},
+    {"$                  $"},
+    {"$                  $"},
+    {"$                  $"},
+    {"$                  $"},
+    {"$                  $"},
+    {"$$$$$$$$$$$$$$$$$$$$"}  
+};  
 
 
 for (int i =0; i<gameMechInstance->getBoardSizeY();i++){
