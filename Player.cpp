@@ -2,32 +2,23 @@
 #include "iostream"
 
 
-Player::Player(GameMechs* thisGMRef)
+Player::Player(GameMechs* thisGMRef)        //Initializes all data members of Player class
 {
-    playerPosList = new objPosArrayList(); 
+    playerPosList = new objPosArrayList();      //Starting player size
     mainGameMechsRef = thisGMRef;
-    myDir = STOP;
-    playerPosList->insertHead(objPos(11,5,'*'));
-    backLog =0; 
-    
-
-
-   
-
-    // more actions to be included
-
+    myDir = STOP;                             //Starting state is stop
+    playerPosList->insertHead(objPos(11,5,'*'));    //Starts player in the middle of the board
+    backLog = 0;            //Backlog starts as 0, since no food has been eaten yet
 }
 
 Player::~Player()
 {
-    // delete any heap members here
-    delete playerPosList; 
+    delete playerPosList;           //Deletes the playerPosList assigned on the heap
 }
 
 objPosArrayList* Player::getPlayerPos() const
 {
-    return playerPosList; 
-    // return the reference to the playerPos arrray list
+    return playerPosList;        //Returns the reference to the playerPos arrray list
 }
 
 void Player::updatePlayerDir()
@@ -60,7 +51,7 @@ void Player::updatePlayerDir()
 
 }
 
-int Player::movePlayer(Food *snakeFood)
+int Player::movePlayer(Food *snakeFood)         //Player movement logic
 {
   
     objPos nextHead = playerPosList->getHeadElement(); 
@@ -105,47 +96,47 @@ int Player::movePlayer(Food *snakeFood)
             nextHead.pos->x = mainGameMechsRef->getBoardSizeX()-2;
         }
         break;
-    case STOP:
+    case STOP:          //Stop case has no change in x or y coordinates, player does not move
         break; 
     }
 
-    if (checkSelfCollision()){
-        mainGameMechsRef->setLoseFlag();
+    if (checkSelfCollision()){          //Calls checkSelfCollision, if true then loseFlag is called and set to true.
+        mainGameMechsRef->setLoseFlag();    //Then the game ends
         return 1; 
     }
     
-    if(checkFoodConsumption(snakeFood) == 1)
+    if(checkFoodConsumption(snakeFood) == 1)  //Calls checkFoodConsumption, if return value is 1 (capital S was eaten), do the following:
     {
-        backLog=1; 
-        snakeFood->generateFood(playerPosList);
-        mainGameMechsRef->setScore(mainGameMechsRef->incrementScore(3));
+        backLog = 1;    //Backlog is set 1, so size can be increazed by 1 later. 'S' only increments length by 1, same as default chars
+        snakeFood->generateFood(playerPosList); //Generates new food because food was just eaten, passes playerPosList so food does not generate on top of the player/snake
+        mainGameMechsRef->setScore(mainGameMechsRef->incrementScore(3));    //Special character 'S', increments score by 3
     }
 
-    if(checkFoodConsumption(snakeFood) == 2)
+    if(checkFoodConsumption(snakeFood) == 2)   //Calls checkFoodConsumption, if return value is 2 (lowercase s was eaten), do the following:
     {
-        backLog =3; 
-        snakeFood->generateFood(playerPosList);
-        mainGameMechsRef->setScore(mainGameMechsRef->incrementScore(1));
+        backLog = 3;    //Backlog is set to 3, so size can be increazed by 3 later. So, special character 's', increments snake/player length by 3 instead of default 1
+        snakeFood->generateFood(playerPosList);  //Generates new food because food was just eaten, passes playerPosList so food does not generate on top of the player/snake
+        mainGameMechsRef->setScore(mainGameMechsRef->incrementScore(1)); //'s' only increments score by 1, same as default chars
     }
 
-    if((checkFoodConsumption(snakeFood) == -1))
+    if((checkFoodConsumption(snakeFood) == -1)) //Calls checkFoodConsumption, if return value is 2 (default char was eaten), do the following:
     {
-        backLog=1; 
-       snakeFood->generateFood(playerPosList);
-       mainGameMechsRef->setScore(mainGameMechsRef->incrementScore(1));
+        backLog = 1;     //Backlog is set 1, so size can be increazed by 1 later. Defualt chars only increase length by 1
+       snakeFood->generateFood(playerPosList);  //Generates new food because food was just eaten, passes playerPosList so food does not generate on top of the player/snake
+       mainGameMechsRef->setScore(mainGameMechsRef->incrementScore(1));   //Default chars only increment score by 1
     }
   
-    if(backLog>0){
-        backLog--;
-    playerPosList->insertHead(nextHead); 
-    }
+    if(backLog>0)   //if backlog is more than 0, then a food was eaten
+    {          
+        backLog--;          //Decrement backlog for future iterations
+        playerPosList->insertHead(nextHead);   //Then increase length for each iteration where backlog was more than 0,
+    }                                          //which is 3 times for 's' and once for anything else
 
-    else{
-        playerPosList->insertHead(nextHead); 
+    else{       //If backlog is 0, food was not eaten
+        playerPosList->insertHead(nextHead);   //Follow the normal movement logic
 
-        playerPosList->removeTail();
-
-    }
+        playerPosList->removeTail();        //Tail is removed here because we want the snake size to remain constant and move it,
+    }                                       //not add more chars to snake.
     
     return 0;
 
@@ -157,42 +148,43 @@ Player::Dir Player::getFSMState(){
 }
 
 
-int Player::checkFoodConsumption(Food *snakeFood){
-    for (int i =0; i<snakeFood->bucketSize(); i++){
-        objPos currentFood = snakeFood->getFromBucket(i);
+int Player::checkFoodConsumption(Food *snakeFood){  //Checks if food was eaten by obtaining current food from bucket,
+    for (int i =0; i<snakeFood->bucketSize(); i++){     //and comparing the current food's x and y coordinates
+        objPos currentFood = snakeFood->getFromBucket(i);      //to the snake/player head's x and y coordinates
         if (playerPosList->getHeadElement().pos->x == currentFood.pos->x  && playerPosList->getHeadElement().pos->y == currentFood.pos->y){
-            if (currentFood.symbol == 'S')
-            {
-                return 1; 
+            if (currentFood.symbol == 'S')              //If the current food does have the same x and y pos as snake/player head,
+            {                                           //return value depends on food symbol "eaten". This is to implement "Special chars" and how they function in the game
+                return 1;                               //If current food symbol is 'S' (capital S), return 1
             }
             else if(currentFood.symbol == 's')
             {
-                return 2;
+                return 2;                               //If current food symbol is 's' (lowercase S), return 2
             }
             else
             {
-                return -1; 
+                return -1;                      //If current food symbol is any other character, return -1
             }
-        }
+        }                                       //These values are used in various fucntions for other purposes
     }
-    return 0;
+    return 0;           //Default return of 0
 }
 
 
 void Player::increasePlayerLength(){
-    objPos newTail = playerPosList->getHeadElement();
+    objPos newTail = playerPosList->getHeadElement();       //Increases player length at head element
     
     playerPosList->insertHead(objPos(newTail.pos->x,newTail.pos->y,'*')); 
         
 }
  
-bool Player::checkSelfCollision(){
-    objPos playerHead = playerPosList->getHeadElement();
+bool Player::checkSelfCollision(){     
+    objPos playerHead = playerPosList->getHeadElement();    //Creates a new variable and assigns it to the snake head pos
 
-    for (int i =1; i<playerPosList->getSize(); i++){
-        objPos currentBodyPart = playerPosList->getElement(i);
-        if (playerHead.pos->x == currentBodyPart.pos->x && playerHead.pos->y==currentBodyPart.pos->y){
-            return true; 
+    for (int i =1; i<playerPosList->getSize(); i++){        //Iterates through the whole snake body,
+        objPos currentBodyPart = playerPosList->getElement(i);  //assigns currentBodyPart to the snake element it has iterated to.
+        if (playerHead.pos->x == currentBodyPart.pos->x && playerHead.pos->y==currentBodyPart.pos->y)   //And checks if the player head has the same x and y pos as the current body
+        { 
+            return true;    
         }
     }
 

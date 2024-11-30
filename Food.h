@@ -11,7 +11,7 @@ class Food
     objPosArrayList  * foodBucket; 
     public:
     void generateFood(objPosArrayList* blockOff);
-//     The random food generation algorithm should be placed here. (copy from PPA3)
+//     The random food generation algorithm should be placed here.
 //  blockOff should contain the player position, on which the new food should NOT be generated.
 
     objPos getFoodPos() const;

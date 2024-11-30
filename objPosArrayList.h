@@ -8,14 +8,14 @@
 class objPosArrayList
 {
     private:
-        objPos* aList;
+        objPos* aList;              //Pointer of type objPos, a previously created class
         int listSize;
         int arrayCapacity;
 
     public:
-        objPosArrayList();      //Destructor
+        objPosArrayList();      //Constructor
         objPosArrayList(int foodListSize);
-        ~objPosArrayList();     //Constructor
+        ~objPosArrayList();     //Destructor
         objPosArrayList(objPosArrayList const &arr);    //Copy constructor
         objPosArrayList& operator=(objPosArrayList const &arr);     //Copy assignment operator 
 

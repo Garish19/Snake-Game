@@ -11,8 +11,8 @@ using namespace std;
 
 objPosArrayList::objPosArrayList()      //Constructor
 {
-    arrayCapacity = ARRAY_MAX_CAP;
-    listSize = 0;
+    arrayCapacity = ARRAY_MAX_CAP;  //Constructor assigns heap space because aList is a pointer of type objPos
+    listSize = 0;                   //so the objPos has to be initialized on the heap
     aList = new objPos[ARRAY_MAX_CAP];  
    
 }
@@ -21,7 +21,7 @@ objPosArrayList::objPosArrayList(int foodListSize)      //Constructor
 {
     arrayCapacity = foodListSize;
     listSize = foodListSize;
-    aList = new objPos[foodListSize];  
+    aList = new objPos[foodListSize];       //Same heap logic as default constructor
    
 }
 
@@ -34,7 +34,7 @@ objPosArrayList::objPosArrayList(objPosArrayList const &arr)        //Copy const
 {
     listSize = arr.listSize;
     arrayCapacity = arr.arrayCapacity;
-    aList = new objPos[listSize];
+    aList = new objPos[listSize];           //Deep copy by assigning new heap space for element copied to
     for(int i = 0; i < listSize; i++)
     {
         aList[i] = arr.aList[i];
@@ -48,7 +48,7 @@ objPosArrayList& objPosArrayList::operator =(objPosArrayList const &arr)
         
         this->listSize = arr.listSize;
         this->arrayCapacity = arr.arrayCapacity;
-        for(int i = 0; i < listSize; i++)
+        for(int i = 0; i < listSize; i++)           //Deep copy, heap already created for "this" object
         {
             this->aList[i] = arr.aList[i];
         }
@@ -129,7 +129,7 @@ objPos objPosArrayList::getTailElement() const
     return aList[listSize - 1];
 }
 
-objPos objPosArrayList::getElement(int index) const
+objPos objPosArrayList::getElement(int index) const     //Returns element of specified index, passed as an argument
 {
     if(index >= 0 && index < listSize)
     {
@@ -142,8 +142,8 @@ objPos objPosArrayList::getElement(int index) const
     }
 }
 
-void objPosArrayList::insertElement(int index, objPos food) const
-{
+void objPosArrayList::insertElement(int index, objPos food) const   //Inserts element at a specifed index, passed as an argument
+{                                                                   //The inserted index is of type food, passed as an argument
     if(index >= 0 && index < listSize)
     {
        aList[index] = food ; 
@@ -151,6 +151,6 @@ void objPosArrayList::insertElement(int index, objPos food) const
 
     else
     {
-        cout << "Tried to get element of out of acccess index" << endl;
+        cout << "Tried to insert element in out of acccess index" << endl;
     }
 }

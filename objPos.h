@@ -11,20 +11,17 @@ typedef struct
 class objPos
 {
     public:
-        Pos* pos;        
+        Pos* pos;      //Pointer to 2 a struct pos, has 2 int values, x and y  
         char symbol;
 
-        objPos();
+        objPos();   //Constructor 
         objPos(int xPos, int yPos, char sym);
         
-        // Respect the rule of six / minimum four
-        // [TODO] Implement the missing special member functions to meet the minimum four rule
-        ~objPos();
+        ~objPos();    //Destructor
 
-        //Copy Constructor
-        objPos(const objPos &a);
+        objPos(const objPos &a);    //Copy Constructor
 
-        objPos& operator=(const objPos &a);
+        objPos& operator=(const objPos &a);     //Copy Assignment Operator
 
         void setObjPos(objPos o);        
         void setObjPos(int xPos, int yPos, char sym);  
