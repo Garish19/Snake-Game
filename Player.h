@@ -24,7 +24,7 @@ class Player
         bool checkSelfCollision(); 
 
     private:
-        objPosArrayList* playerPosList;    //Pointer of type objPosArrayit 
+        objPosArrayList* playerPosList;    //Pointer of type objPosArrayList 
         Dir myDir;                         //Current direction
         int backLog;   //Backlog of how many characters need to be inserted into snake tail. Done to ensure that when inserting many characters, they don't insert on top of one another
 

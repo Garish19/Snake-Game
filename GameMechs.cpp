@@ -77,8 +77,8 @@ void GameMechs::setLoseFlag()
 
 void GameMechs::setInput(char this_input)
 {
-    prevInput = input;              ////Stores previous input
-    input = this_input;             //Updates the current input, based on this_input (passed as an argument)
+    prevInput = this_input;          //Stores the input pressed
+    input = this_input;              //Clears the input
 }
 
 void GameMechs::clearInput()
